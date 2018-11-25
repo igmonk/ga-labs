@@ -1,10 +1,11 @@
 (def project 'ga-labs)
 (def version "0.1.0-SNAPSHOT")
 
-(set-env! :resource-paths #{"resources" "src"}
-          :source-paths   #{"test"}
+(set-env! :source-paths   #{"src" "test"}
+          :resource-paths #{"resources"}
           :dependencies   '[[org.clojure/clojure "1.9.0"]
-                            [adzerk/boot-test "1.2.0" :scope "test"]])
+                            [adzerk/boot-test "1.2.0" :scope "test"]
+                            [onetom/boot-lein-generate "0.1.3" :scope "test"]])
 
 (task-options!
  aot {:namespace   #{'ga-labs.core}}
@@ -18,6 +19,10 @@
  repl {:init-ns    'ga-labs.core}
  jar {:main        'ga-labs.core
       :file        (str "ga-labs-" version "-standalone.jar")})
+
+; https://github.com/boot-clj/boot/wiki/For-Cursive-Users
+(require 'boot.lein)
+(boot.lein/generate)
 
 (deftask build
   "Build the project locally as a JAR."
