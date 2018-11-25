@@ -3,8 +3,8 @@
 
 (set-env! :resource-paths #{"resources" "src"}
           :source-paths   #{"test"}
-          :dependencies   '[[org.clojure/clojure "RELEASE"]
-                            [adzerk/boot-test "RELEASE" :scope "test"]])
+          :dependencies   '[[org.clojure/clojure "1.9.0"]
+                            [adzerk/boot-test "1.2.0" :scope "test"]])
 
 (task-options!
  aot {:namespace   #{'ga-labs.core}}
