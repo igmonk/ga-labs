@@ -5,7 +5,8 @@
           :resource-paths #{"resources"}
           :dependencies   '[[org.clojure/clojure "1.9.0"]
                             [adzerk/boot-test "1.2.0" :scope "test"]
-                            [onetom/boot-lein-generate "0.1.3" :scope "test"]])
+                            [onetom/boot-lein-generate "0.1.3" :scope "test"]
+                            [seesaw "1.5.0"]])
 
 (task-options!
  aot {:namespace   #{'ga-labs.core}}
