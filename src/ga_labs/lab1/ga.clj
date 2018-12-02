@@ -1,5 +1,6 @@
 (ns ga-labs.lab1.ga
-  (:require [ga-labs.lab1.chromosome :refer :all]))
+  (:require [ga-labs.lab1.chromosome :refer :all]
+            [ga-labs.common.util :as u]))
 
 ; x [-9; 9]
 (def x-min -9)
@@ -29,24 +30,13 @@
         y-max (apply max ys)]
     (range y-min (inc y-max))))
 
-(defn code->gray-code [code]
-  (bit-xor code (bit-shift-right code 1)))
-
-(defn gray-code->code [gray-code]
-  (loop [result gray-code
-         mask (bit-shift-right gray-code 1)]
-    (if (= mask 0)
-      result
-      (recur (bit-xor result mask)
-             (bit-shift-right mask 1)))))
-
 (defn code->x [chromosomes-total code]
   (+ x-min
      (* code (/ (- x-max x-min)
                 (- chromosomes-total 1)))))
 
 (defn create-chromosome [chromosomes-total code]
-  (let [gray-code (code->gray-code code)
+  (let [gray-code (u/code->gray-code code)
         x (code->x chromosomes-total code)
         y (fitness-function x)]
     (->Chromosome code gray-code x y)))
@@ -110,10 +100,10 @@
                                                            (:gray-code chromosome-2)
                                                            chromosome-size
                                                            probability)
-        code1 (gray-code->code gray-code-1)
+        code1 (u/gray-code->code gray-code-1)
         x1 (code->x chromosomes-total code1)
         y1 (fitness-function x1)
-        code2 (gray-code->code gray-code-2)
+        code2 (u/gray-code->code gray-code-2)
         x2 (code->x chromosomes-total code2)
         y2 (fitness-function x2)]
     [(->Chromosome code1 gray-code-1 x1 y1)
@@ -138,7 +128,7 @@
     (if (> r probability)
       (let [chromosomes-total (Math/pow 2 chromosome-size)
             gray-code (mutate-gray-code (:gray-code chromosome) chromosome-size)
-            code (gray-code->code gray-code)
+            code (u/gray-code->code gray-code)
             x (code->x chromosomes-total code)]
         (->Chromosome code gray-code x (fitness-function x)))
       chromosome)))
